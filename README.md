@@ -1,15 +1,21 @@
 # Internship-html-project
 My first internship project
 
-## Front-end activity
+## Front-end report
 
-The first task focused on the Smart Library website interface:
+The first task built the Smart Library website interface for visitors and prospective members.
 
-- Created Home, About, Contact, and Member Registration pages.
-- Added shared responsive navigation so visitors can move between pages.
-- Styled the pages with HTML, custom CSS, and Bootstrap 5.
-- Built Contact and Member Registration forms. The registration form collects a member's name, email, phone, gender, address, and date of birth.
-- Added JavaScript client-side validation for required fields, email format, the 10-digit phone number, and future dates.
+### Pages and interface work
+
+- **Home:** introduces the Smart Library.
+- **About:** presents information about the library.
+- **Contact:** provides the contact form interface.
+- **Member Registration:** collects name, email, phone, gender, address, and date of birth.
+- Shared responsive navigation connects the pages. The layout uses HTML, custom CSS, and Bootstrap 5.
+
+### Form validation
+
+JavaScript checks the registration form before it is submitted. It checks required fields, email format, a 10-digit phone number, and that the date of birth is not in the future. Invalid fields receive browser validation messages. The PHP handler repeats the validation on the server before saving the registration.
 
 ## Run locally with XAMPP
 
