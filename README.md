@@ -9,6 +9,7 @@ The first task focused on the Smart Library website interface:
 - Added shared responsive navigation so visitors can move between pages.
 - Styled the pages with HTML, custom CSS, and Bootstrap 5.
 - Built Contact and Member Registration forms. The registration form collects a member's name, email, phone, gender, address, and date of birth.
+- Added JavaScript client-side validation for required fields, email format, the 10-digit phone number, and future dates.
 
 ## Run locally with XAMPP
 
