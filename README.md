@@ -1,6 +1,15 @@
 # Internship-html-project
 My first internship project
 
+## Front-end activity
+
+The first task focused on the Smart Library website interface:
+
+- Created Home, About, Contact, and Member Registration pages.
+- Added shared responsive navigation so visitors can move between pages.
+- Styled the pages with HTML, custom CSS, and Bootstrap 5.
+- Built Contact and Member Registration forms. The registration form collects a member's name, email, phone, gender, address, and date of birth.
+
 ## Run locally with XAMPP
 
 1. Place this project folder under XAMPP's `htdocs` directory.
