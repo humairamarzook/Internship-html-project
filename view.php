@@ -29,6 +29,8 @@ $stmt->bind_param(
 $stmt->execute();
 
 $result = $stmt->get_result();
+$flash = $_SESSION['admin_flash'] ?? null;
+unset($_SESSION['admin_flash']);
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +67,14 @@ $result = $stmt->get_result();
 
     <h2 class="mb-4">All Entries</h2>
 
+    <?php if (is_array($flash) && isset($flash['message'])): ?>
+        <?php $flashType = in_array($flash['type'] ?? '', ['success', 'warning', 'danger'], true) ? $flash['type'] : 'success'; ?>
+        <div class="alert alert-<?php echo htmlspecialchars($flashType, ENT_QUOTES, 'UTF-8'); ?> alert-dismissible fade show" role="status">
+            <?php echo htmlspecialchars((string) $flash['message'], ENT_QUOTES, 'UTF-8'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
     <form method="GET" class="mb-3">
         <div class="input-group">
             <input
@@ -93,6 +103,7 @@ $result = $stmt->get_result();
                     <th>Address</th>
                     <th>Date of Birth</th>
                     <th>Created At</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -109,12 +120,25 @@ $result = $stmt->get_result();
                             <td><?php echo htmlspecialchars($row['address']); ?></td>
                             <td><?php echo htmlspecialchars($row['dob']); ?></td>
                             <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                            <td class="text-nowrap">
+                                <a class="btn btn-sm btn-primary mb-1"
+                                   href="edit.php?id=<?php echo (int) $row['id']; ?><?php echo $search === '' ? '' : '&amp;search=' . rawurlencode($search); ?>">
+                                    Edit
+                                </a>
+                                <form method="POST" action="delete.php" class="d-inline"
+                                      onsubmit="return confirm('Delete registration #<?php echo (int) $row['id']; ?>? This cannot be undone.');">
+                                    <input type="hidden" name="id" value="<?php echo (int) $row['id']; ?>">
+                                    <input type="hidden" name="search" value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(admin_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+                                    <button type="submit" class="btn btn-sm btn-danger mb-1">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
 
                 <?php else: ?>
                     <tr>
-                        <td colspan="8" class="text-center">
+                        <td colspan="9" class="text-center">
                             No entries found
                         </td>
                     </tr>
@@ -129,6 +153,7 @@ $result = $stmt->get_result();
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
