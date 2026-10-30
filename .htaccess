@@ -1,0 +1,6 @@
+<Files "config.php">
+    Require all denied
+</Files>
+<FilesMatch "^admin_config(\.example)?\.php$">
+    Require all denied
+</FilesMatch>

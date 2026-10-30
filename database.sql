@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `entries` (
     `address` TEXT NOT NULL,
     `dob` DATE NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY `uq_entries_email` (`email`),
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $name = trim($_POST['name'] ?? '');
-$email = trim($_POST['email'] ?? '');
+$email = strtolower(trim($_POST['email'] ?? ''));
 $phone = trim($_POST['phone'] ?? '');
 $gender = trim($_POST['gender'] ?? '');
 $address = trim($_POST['address'] ?? '');
@@ -68,6 +68,21 @@ if ($dobDate > new DateTimeImmutable('today')) {
 }
 
 try {
+    $duplicateCheck = $conn->prepare('SELECT id FROM entries WHERE email = ? LIMIT 1');
+    $duplicateCheck->bind_param('s', $email);
+    $duplicateCheck->execute();
+    $existingEntry = $duplicateCheck->get_result();
+    $isDuplicate = $existingEntry->num_rows > 0;
+    $duplicateCheck->close();
+
+    if ($isDuplicate) {
+        showMessage(
+            'Email already registered',
+            'This email address already has a registration. Please use a different email address.',
+            409
+        );
+    }
+
     $stmt = $conn->prepare(
         'INSERT INTO entries (name, email, phone, gender, address, dob)
          VALUES (?, ?, ?, ?, ?, ?)'
@@ -77,6 +92,14 @@ try {
     $stmt->close();
     $conn->close();
 } catch (Throwable $error) {
+    if ($error instanceof mysqli_sql_exception && (int) $error->getCode() === 1062) {
+        showMessage(
+            'Email already registered',
+            'This email address already has a registration. Please use a different email address.',
+            409
+        );
+    }
+
     error_log('Registration save failed: ' . $error->getMessage());
     showMessage('Registration not saved', 'We could not save your registration. Please try again.', 500);
 }
