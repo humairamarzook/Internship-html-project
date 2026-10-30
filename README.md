@@ -2,23 +2,39 @@
 
 ## Internship Task Report
 
-### Day 1 — Front-End Development
+### Day 1 – Basic PHP Web Development
 
-- Built the Home, About, Contact, and Registration pages for the Smart Library website.
-- Used HTML, CSS, and Bootstrap to create a consistent, responsive layout and navigation.
-- Added JavaScript validation for required registration fields, email format, a 10-digit phone number, and date of birth.
+#### Tasks Completed
 
-### Day 2 — PHP and MySQL Registration
+- Created a basic web project using HTML and CSS.
+- Developed an Index page.
+- Created an About page.
+- Created a Contact page.
+- Created a Registration form.
+- Practised basic PHP and web page development.
 
-- Connected the registration form to a PHP form handler using `POST`.
-- Added server-side checks for the submitted registration details.
-- Created the `your_project_db.entries` table to store name, email, phone, gender, address, date of birth, and submission time.
-- Used a prepared statement to save registrations to MySQL.
+### Day 2 – PHP Form Submission and MySQL Database
 
-### Day 3 — Admin Entries and Duplicate Prevention
+#### Tasks Completed
 
-- Added an admin sign-in with session protection for the registration entries page.
-- Made entries searchable by name, email, gender, phone number, address, and date of birth.
-- Prevented repeat registrations for the same email in both PHP and the database.
-- Cleaned duplicate registrations in the local database while keeping the earliest entry and retaining a recovery copy.
+- Set up the PHP development environment using XAMPP.
+- Created a MySQL database using phpMyAdmin.
+- Established a database connection using PHP.
+- Developed a registration form.
+- Implemented PHP form submission.
+- Stored submitted form data in the MySQL database.
+- Tested database insertion and form functionality.
+
+### Day 3 – Fetch and Display Data Using PHP and MySQL
+
+#### Tasks Completed
+
+- Created a `view.php` page.
+- Connected the display page to the MySQL database.
+- Retrieved database records using SQL `SELECT` queries.
+- Displayed records in an HTML table.
+- Designed the table using Bootstrap.
+- Implemented search functionality by name and email.
+- Added table borders, striped rows, and hover effects.
+- Tested database records and search functionality.
 
