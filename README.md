@@ -38,3 +38,16 @@
 - Added table borders, striped rows, and hover effects.
 - Tested database records and search functionality.
 
+### Day 4 – Edit and Delete Records Using PHP and MySQL
+
+#### Tasks Completed
+
+- Added Edit and Delete actions to each registration in the admin entries page.
+- Fetched a registration by its ID and displayed its existing name, email, and phone number in the edit form.
+- Checked for empty fields and validated the name, email address, and 10-digit phone number.
+- Saved edited details with a prepared SQL `UPDATE` query and prevented duplicate email addresses.
+- Created `delete.php` to remove a registration by ID with a prepared SQL `DELETE` query, then redirect to the entries page.
+- Added a confirmation prompt before deleting a registration.
+- Tested fetching, validation, updating, and deleting with a temporary record; verified the saved values and confirmed the temporary record was removed from MySQL.
+- Restricted edit and delete actions to the admin session and protected the requests with CSRF tokens.
+
