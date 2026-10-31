@@ -46,6 +46,7 @@ try {
         }
 
         $name = trim((string) ($_POST['name'] ?? ''));
+        $name = function_exists('mb_strtoupper') ? mb_strtoupper($name, 'UTF-8') : strtoupper($name);
         $email = strtolower(trim((string) ($_POST['email'] ?? '')));
         $phone = trim((string) ($_POST['phone'] ?? ''));
 
@@ -131,10 +132,11 @@ $backUrl = 'view.php' . ($search === '' ? '' : '?search=' . rawurlencode($search
 
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input id="name" name="name" type="text" maxlength="100" required
+            <input id="name" name="name" type="text" maxlength="100" required aria-describedby="nameFeedback"
                    class="form-control<?php echo isset($errors['name']) ? ' is-invalid' : ''; ?>"
                    value="<?php echo escape((string) $entry['name']); ?>">
             <?php if (isset($errors['name'])): ?><div class="invalid-feedback"><?php echo escape($errors['name']); ?></div><?php endif; ?>
+            <div id="nameFeedback" class="form-text" aria-live="polite">Names are converted to uppercase.</div>
         </div>
 
         <div class="mb-3">
@@ -147,10 +149,11 @@ $backUrl = 'view.php' . ($search === '' ? '' : '?search=' . rawurlencode($search
 
         <div class="mb-4">
             <label for="phone" class="form-label">Phone</label>
-            <input id="phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required
+            <input id="phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required aria-describedby="phoneFeedback"
                    class="form-control<?php echo isset($errors['phone']) ? ' is-invalid' : ''; ?>"
                    value="<?php echo escape((string) $entry['phone']); ?>">
             <?php if (isset($errors['phone'])): ?><div class="invalid-feedback"><?php echo escape($errors['phone']); ?></div><?php endif; ?>
+            <div id="phoneFeedback" class="form-text" aria-live="polite">Only digits are kept.</div>
         </div>
 
         <div class="d-flex gap-2">
@@ -159,5 +162,47 @@ $backUrl = 'view.php' . ($search === '' ? '' : '?search=' . rawurlencode($search
         </div>
     </form>
 </main>
+<script>
+(() => {
+    const nameInput = document.getElementById('name');
+    const phoneInput = document.getElementById('phone');
+    const nameFeedback = document.getElementById('nameFeedback');
+    const phoneFeedback = document.getElementById('phoneFeedback');
+    const namePattern = /^[\p{L}\p{M}][\p{L}\p{M} .'-]*$/u;
+
+    nameInput.addEventListener('input', () => {
+        const cursor = nameInput.selectionStart;
+        const upper = nameInput.value.toLocaleUpperCase();
+        if (nameInput.value !== upper) {
+            nameInput.value = upper;
+            if (cursor !== null) {
+                const position = Math.min(cursor, nameInput.value.length);
+                nameInput.setSelectionRange(position, position);
+            }
+        }
+
+        const value = nameInput.value.trim();
+        const error = !value
+            ? 'Enter a name.'
+            : (!namePattern.test(value) ? 'Use letters, spaces, apostrophes, periods, or hyphens only.' : '');
+        nameInput.setCustomValidity(error);
+        nameInput.classList.toggle('is-invalid', Boolean(error));
+        nameInput.classList.toggle('is-valid', !error);
+        nameFeedback.className = error ? 'form-text text-danger' : 'form-text text-success';
+        nameFeedback.textContent = error || 'Name looks good and is uppercase.';
+    });
+
+    phoneInput.addEventListener('input', () => {
+        const digits = phoneInput.value.replace(/[^0-9]/g, '').slice(0, 10);
+        phoneInput.value = digits;
+        const error = digits.length === 10 ? '' : 'Enter exactly 10 digits.';
+        phoneInput.setCustomValidity(error);
+        phoneInput.classList.toggle('is-invalid', Boolean(error));
+        phoneInput.classList.toggle('is-valid', !error);
+        phoneFeedback.className = error ? 'form-text text-danger' : 'form-text text-success';
+        phoneFeedback.textContent = error || 'Phone number contains digits only.';
+    });
+})();
+</script>
 </body>
 </html>

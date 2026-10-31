@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $name = trim($_POST['name'] ?? '');
+$name = function_exists('mb_strtoupper') ? mb_strtoupper($name, 'UTF-8') : strtoupper($name);
 $email = strtolower(trim($_POST['email'] ?? ''));
 $phone = trim($_POST['phone'] ?? '');
 $gender = trim($_POST['gender'] ?? '');
@@ -37,8 +38,14 @@ if ($name === '' || $email === '' || $phone === '' || $gender === '' || $address
     showMessage('Missing information', 'Please complete every field in the registration form.', 400);
 }
 
-if (strlen($name) > 100 || strlen($email) > 100 || strlen($address) > 1000) {
+if ((function_exists('mb_strlen') ? mb_strlen($name, 'UTF-8') : strlen($name)) > 100
+    || strlen($email) > 100
+    || strlen($address) > 1000) {
     showMessage('Input is too long', 'Please shorten your name, email, or address and try again.', 400);
+}
+
+if (preg_match("/^[\\p{L}\\p{M}][\\p{L}\\p{M} .'-]*$/u", $name) !== 1) {
+    showMessage('Invalid name', 'Use letters, spaces, apostrophes, periods, or hyphens in your name.', 400);
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

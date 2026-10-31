@@ -49,6 +49,8 @@
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#menu"
+                aria-controls="menu"
+                aria-expanded="false"
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -107,7 +109,11 @@
                         <input type="text" class="form-control"
                                id="name" name="name"
                                maxlength="100" autocomplete="name"
+                               aria-describedby="nameFeedback"
                                placeholder="Enter your full name" required>
+                        <div id="nameFeedback" class="form-text" aria-live="polite">
+                            Names are checked as you type and converted to uppercase.
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -128,8 +134,12 @@
                                id="phone" name="phone"
                                inputmode="numeric" pattern="[0-9]{10}"
                                maxlength="10" autocomplete="tel"
+                               aria-describedby="phoneFeedback"
                                title="Enter a 10-digit phone number"
                                placeholder="Enter your phone number" required>
+                        <div id="phoneFeedback" class="form-text" aria-live="polite">
+                            Enter 10 digits; other characters will be removed.
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -214,6 +224,57 @@
     dob.max = todayString;
 
     const fields = [name, email, phone, gender, address, dob];
+    const nameFeedback = document.getElementById('nameFeedback');
+    const phoneFeedback = document.getElementById('phoneFeedback');
+    const validNamePattern = /^[\p{L}\p{M}][\p{L}\p{M} .'-]*$/u;
+
+    function validateName() {
+        const trimmedName = name.value.trim();
+        let error = '';
+
+        if (!trimmedName) {
+            error = 'Enter your full name.';
+        } else if (!validNamePattern.test(trimmedName)) {
+            error = 'Use letters, spaces, apostrophes, periods, or hyphens only.';
+        }
+
+        name.setCustomValidity(error);
+        name.classList.toggle('is-invalid', Boolean(error));
+        name.classList.toggle('is-valid', !error);
+        nameFeedback.className = error ? 'form-text text-danger' : 'form-text text-success';
+        nameFeedback.textContent = error || 'Name looks good and will be saved in uppercase.';
+        return !error;
+    }
+
+    function filterPhoneInput() {
+        const digits = phone.value.replace(/[^0-9]/g, '').slice(0, 10);
+        if (phone.value !== digits) {
+            phone.value = digits;
+        }
+
+        const valid = /^[0-9]{10}$/.test(digits);
+        const error = valid ? '' : 'Enter exactly 10 digits.';
+        phone.setCustomValidity(error);
+        phone.classList.toggle('is-invalid', Boolean(error));
+        phone.classList.toggle('is-valid', valid);
+        phoneFeedback.className = error ? 'form-text text-danger' : 'form-text text-success';
+        phoneFeedback.textContent = error || 'Phone number contains digits only.';
+    }
+
+    name.addEventListener('input', () => {
+        const cursorPosition = name.selectionStart;
+        const uppercaseName = name.value.toLocaleUpperCase();
+        if (name.value !== uppercaseName) {
+            name.value = uppercaseName;
+            if (cursorPosition !== null) {
+                const newPosition = Math.min(cursorPosition, name.value.length);
+                name.setSelectionRange(newPosition, newPosition);
+            }
+        }
+        validateName();
+    });
+
+    phone.addEventListener('input', filterPhoneInput);
 
     fields.forEach((field) => {
         field.addEventListener('input', () => field.setCustomValidity(''));
@@ -223,9 +284,7 @@
     form.addEventListener('submit', (event) => {
         fields.forEach((field) => field.setCustomValidity(''));
 
-        if (!name.value.trim()) {
-            name.setCustomValidity('Enter your full name.');
-        }
+        validateName();
 
         if (!email.value.trim()) {
             email.setCustomValidity('Enter your email address.');
@@ -233,9 +292,7 @@
             email.setCustomValidity('Enter a valid email address.');
         }
 
-        if (!/^[0-9]{10}$/.test(phone.value.trim())) {
-            phone.setCustomValidity('Enter a 10-digit phone number.');
-        }
+        filterPhoneInput();
 
         if (!gender.value) {
             gender.setCustomValidity('Select a gender option.');

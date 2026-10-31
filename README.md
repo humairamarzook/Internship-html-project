@@ -51,3 +51,16 @@
 - Tested fetching, validation, updating, and deleting with a temporary record; verified the saved values and confirmed the temporary record was removed from MySQL.
 - Restricted edit and delete actions to the admin session and protected the requests with CSRF tokens.
 
+### Day 5 – Form Validation, Sorting, and Responsive Layout
+
+#### Tasks Completed
+
+- Added real-time name validation and automatically converted names to uppercase in the registration form.
+- Enforced uppercase names and name validation in PHP so the checks also apply when browser scripting is unavailable.
+- Made the phone field keep digits only and enforced a 10-digit phone number on the server.
+- Added ascending and descending sorting for registration name, email, and phone while preserving search results.
+- Highlighted table rows on hover and kept the entries table usable on narrow screens with responsive horizontal scrolling.
+- Improved the admin entries layout with Bootstrap and added a collapsible, mobile-friendly navigation bar.
+- Kept the delete confirmation prompt and registration success message in place.
+- Checked live name validation and phone filtering in the browser; confirmed successful registration and tested each sort order with temporary records, then removed the test records.
+
