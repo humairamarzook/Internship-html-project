@@ -74,15 +74,18 @@
 - Installed the Firebase JavaScript SDK and created a Firebase project with a registered web app.
 - Added `src/firebase.js` to initialize Firebase using the web app configuration stored in the local `.env.local` file.
 - Tested the initialization by confirming that `console.log(app)` displayed a `FirebaseAppImpl` object in the browser console.
-- Added name (minimum 3 characters), valid email, and 10-digit numeric phone validation to the React registration form.
-- Added a Firestore write to the `users` collection with the registration name, email, phone, and a server timestamp; added saving feedback and a success message.
 - Ran `npm run build` successfully.
 
-#### Verification
+### Day 7 – Firestore Registration and Validation
 
-- Created the Cloud Firestore database in the Firebase Console.
-- Submitted three sample registrations and confirmed that three documents appeared in `users` with their registration fields and timestamps.
-- Deleted the sample registration documents after verifying them.
+#### Tasks Completed
+
+- Created the default Cloud Firestore database in the Firebase Console using test mode.
+- Connected the React registration form to save each registration in the `users` collection with `name`, `email`, `phone`, and a server-generated timestamp.
+- Added validation for names of at least 3 characters, valid email addresses, and phone numbers containing exactly 10 digits.
+- Added a saving spinner and success/error messages.
+- Submitted three sample registrations, confirmed that their documents and fields appeared in Firestore, then deleted the sample documents.
+- Ran the build and lint checks successfully.
 
 #### Security Note
 
