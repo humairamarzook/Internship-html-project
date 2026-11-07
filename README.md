@@ -64,8 +64,17 @@
 - Kept the delete confirmation prompt and registration success message in place.
 - Checked live name validation and phone filtering in the browser; confirmed successful registration and tested each sort order with temporary records, then removed the test records.
 
-## Daily Reports
+## Day 6 Source Code
 
-- [Day 6: React App Development and Firebase Setup](reports/day-6-report.md)
-- [Day 7: Firestore Registration, Validation, and Testing](reports/day-7-report.md)
+- [React app navigation](smart-library-app/src/App.jsx)
+- [Home screen](smart-library-app/src/home.js)
+- [Registration screen](smart-library-app/src/registration.js)
+- [About screen](smart-library-app/src/about.js)
+- [Firebase initialization](smart-library-app/src/firebase.js)
+
+## Day 7 Source Code
+
+- [Registration validation and Firestore save](smart-library-app/src/registration.js)
+- [Firestore database initialization](smart-library-app/src/firebase.js)
+- [Saving spinner and status styling](smart-library-app/src/App.css)
 
