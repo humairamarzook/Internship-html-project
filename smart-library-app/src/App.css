@@ -23,7 +23,7 @@ main { flex: 1; }
 .hero-copy h1 { max-width: 570px; font-size: clamp(46px, 6vw, 75px); }
 .hero-copy h1 em { color: #66876a; font-weight: 500; }
 .hero-copy p, .page-heading p { max-width: 490px; color: #69776e; line-height: 1.8; font-size: 16px; }
-.hero-actions { margin-top: 31px; display: flex; align-items: center; gap: 22px; }
+.hero-actions { margin-top: 31px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
 .text-link { border: 0; padding: 10px 0; background: transparent; color: #315e49; font-weight: 600; }
 .text-link:hover { color: #173e2d; }
 .hero-art { min-height: 440px; position: relative; display: grid; place-items: center; overflow: hidden; border-radius: 240px 240px 28px 28px; background: #e5e9d9; }
@@ -62,6 +62,27 @@ main { flex: 1; }
 .about-card p { margin: 0; color: #69776e; line-height: 1.8; font-size: 14px; }
 .about-card.featured { color: #f8f6ed; background: #315e49; border-color: #315e49; }
 .about-card.featured p { color: #d3dfd1; }
+.user-list-page { width: min(1000px, calc(100% - 48px)); }
+.user-list-card { overflow: hidden; border: 1px solid #e1e4da; border-radius: 18px; background: #fffef9; box-shadow: 0 15px 45px rgba(34,61,43,.06); }
+.user-list-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 25px 28px; border-bottom: 1px solid #e8eae3; }
+.user-list-toolbar h2 { margin: 0 0 5px; font: 500 25px 'Playfair Display', Georgia, serif; }
+.user-list-toolbar p { margin: 0; color: #7d8980; font-size: 13px; }
+.user-search { display: grid; gap: 7px; width: min(320px, 100%); color: #304d3c; font-size: 12px; font-weight: 600; }
+.user-search input { width: 100%; padding: 11px 13px; border: 1px solid #dfe4da; border-radius: 9px; outline: none; background: #fcfcf8; color: #18382e; }
+.user-search input:focus { border-color: #66876a; box-shadow: 0 0 0 3px rgba(102,135,106,.13); }
+.user-table-wrap { width: 100%; overflow-x: auto; }
+.user-table { width: 100%; border-collapse: collapse; text-align: left; }
+.user-table th, .user-table td { padding: 15px 28px; border-bottom: 1px solid #edf0e9; font-size: 14px; }
+.user-table th { color: #607265; background: #fafaf5; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.user-table td { color: #304d3c; }
+.user-table tbody tr:last-child td { border-bottom: 0; }
+.user-table tbody tr:hover { background: #f7f8f1; }
+.user-sort-button { display: inline-flex; align-items: center; gap: 7px; padding: 0; border: 0; background: transparent; color: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; }
+.user-sort-button:hover, .user-sort-button:focus-visible { color: #24543d; }
+.user-sort-button span { color: #78907b; font-size: 15px; }
+.user-list-message { display: flex; align-items: center; gap: 10px; min-height: 76px; margin: 0; padding: 22px 28px; color: #637568; font-size: 14px; }
+.user-list-message.is-error { color: #a13d32; }
+.user-list-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #d7e0d3; border-top-color: #315e49; border-radius: 50%; animation: button-spin .7s linear infinite; }
 @media (max-width: 760px) {
   .site-header { width: min(100% - 32px, 1120px); height: 74px; }
   .site-nav { gap: 14px; }
@@ -77,5 +98,9 @@ main { flex: 1; }
   .registration-form { padding: 26px; }
   .about-grid { grid-template-columns: 1fr; }
   .site-footer { width: min(100% - 32px, 1120px); }
+  .user-list-page { width: min(100% - 32px, 600px); }
+  .user-list-toolbar { align-items: stretch; flex-direction: column; padding: 22px; }
+  .user-search { width: 100%; }
+  .user-table { min-width: 620px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

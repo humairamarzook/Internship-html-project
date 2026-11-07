@@ -2,9 +2,10 @@ import { useState } from 'react'
 import Home from './home.js'
 import Registration from './registration.js'
 import About from './about.js'
+import UserList from './userlist.js'
 import './App.css'
 
-const pages = { home: Home, registration: Registration, about: About }
+const pages = { home: Home, registration: Registration, about: About, userlist: UserList }
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
@@ -20,6 +21,7 @@ function App() {
         <nav className="site-nav" aria-label="Main navigation">
           <button className={currentPage === 'home' ? 'nav-link active' : 'nav-link'} onClick={() => setCurrentPage('home')}>Home</button>
           <button className={currentPage === 'about' ? 'nav-link active' : 'nav-link'} onClick={() => setCurrentPage('about')}>About</button>
+          <button className={currentPage === 'userlist' ? 'nav-link active' : 'nav-link'} onClick={() => setCurrentPage('userlist')}>Members</button>
           <button className="nav-cta" onClick={() => setCurrentPage('registration')}>Join the library</button>
         </nav>
       </header>
