@@ -64,3 +64,19 @@
 - Kept the delete confirmation prompt and registration success message in place.
 - Checked live name validation and phone filtering in the browser; confirmed successful registration and tested each sort order with temporary records, then removed the test records.
 
+### Day 6 – React App Development and Firebase Setup
+
+#### Tasks Completed
+
+- Created the `smart-library-app` React project with Vite and confirmed Node.js and npm are available.
+- Built the Home screen with the Smart Library welcome content and navigation to the registration screen.
+- Built the Registration screen with required name and email fields, and the About screen with application information.
+- Installed the Firebase JavaScript SDK and created a Firebase project with a registered web app.
+- Added `src/firebase.js` to initialize Firebase using the web app configuration stored in the local `.env.local` file.
+- Tested the initialization by confirming that `console.log(app)` displayed a `FirebaseAppImpl` object in the browser console.
+- Ran `npm run build` successfully.
+
+#### Note
+
+- The registration form currently displays a client-side confirmation; it does not save registrations to Firebase. Persisting registrations would require a separate Firestore setup and implementation.
+

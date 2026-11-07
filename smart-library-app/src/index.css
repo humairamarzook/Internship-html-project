@@ -1,0 +1,4 @@
+html { scroll-behavior: smooth; }
+body { margin: 0; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #c98d56; outline-offset: 3px; }
+::selection { color: #fffdf8; background: #315e49; }
