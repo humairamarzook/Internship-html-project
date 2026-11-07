@@ -83,3 +83,14 @@
 - Added a loading spinner while saving and a success message after a registration is saved; the form clears after success.
 - Submitted multiple sample registrations and confirmed they appeared as separate documents in the `users` collection, then cleared the sample records.
 
+### Day 8 – Firestore User List, Search, and Sorting
+
+#### Tasks Completed
+
+- Reviewed the Firebase setup and confirmed the Firebase SDK was already installed in the React app.
+- Created `userlist.js` to fetch registered users from the Firestore `users` collection in real time.
+- Displayed each registered user's name, email address, and phone number in a table.
+- Added name search and clickable alphabetical sorting for the name and email columns.
+- Added loading, empty-list, and Firestore error messages, and linked the member list from the app navigation and home screen.
+- Built the React app successfully with Vite.
+
