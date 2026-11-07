@@ -106,3 +106,16 @@
 - Tested Firestore create, update, and delete operations with a temporary record, checked listener updates, verified the record was removed, and checked the missing-record error path.
 - Ran the production build and lint checks successfully.
 
+
+### Day 10 – Responsive UI and Submission Preparation
+
+#### Tasks Completed
+
+- Refined registration labels, placeholders, helper text, and Bootstrap form styling.
+- Improved the members directory with Bootstrap cards, a responsive table, row hover states, and action buttons; kept the navigation usable at a narrow browser width.
+- Checked navigation between Home, About, Registration, and Members screens.
+- Tested Firestore registration and success feedback; confirmed invalid name, email, and phone values show validation alerts and are not submitted.
+- Tested member name search and ascending/descending sorting by name and email.
+- Edited a synthetic member through the app, verified the Firestore update, removed only that test member, and confirmed the live member list refreshed.
+- Added Firebase Hosting configuration for the Vite build output and single-page app routes, plus an `npm run deploy` command and setup instructions.
+- Verified the production build and lint checks. Firebase Hosting is prepared, but no live deployment URL has been created because the Firebase CLI and a Firebase CLI sign-in are not available in this workspace. Firestore test-mode rules also need to be secured before publishing real member data.

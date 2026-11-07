@@ -7,7 +7,7 @@ function Home({ onNavigate }) {
       h('h1', null, 'Find your next ', h('em', null, 'great read.'), ' Make room for discovery.'),
       h('p', null, 'Welcome to Smart Library, a calm and friendly space to explore books, share your interests, and make reading part of every day.'),
       h('div', { className: 'hero-actions' },
-        h('button', { className: 'button-primary', onClick: () => onNavigate('registration') }, 'Create your account'),
+        h('button', { className: 'button-primary btn btn-success', onClick: () => onNavigate('registration') }, 'Create your account'),
         h('button', { className: 'text-link', onClick: () => onNavigate('userlist') }, 'Browse members ↗'),
         h('button', { className: 'text-link', onClick: () => onNavigate('about') }, 'About the project ↗'),
       ),

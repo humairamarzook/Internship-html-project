@@ -168,7 +168,7 @@ function UserList() {
     if (isEditing) {
       return h('tr', { key: user.id, className: 'user-editing-row' },
         h('td', null, h('input', {
-          className: 'user-edit-input',
+          className: 'form-control form-control-sm user-edit-input',
           name: 'name',
           value: editValues.name,
           onChange: changeEditValue,
@@ -177,7 +177,7 @@ function UserList() {
           required: true,
         })),
         h('td', null, h('input', {
-          className: 'user-edit-input',
+          className: 'form-control form-control-sm user-edit-input',
           name: 'email',
           type: 'email',
           value: editValues.email,
@@ -186,7 +186,7 @@ function UserList() {
           required: true,
         })),
         h('td', null, h('input', {
-          className: 'user-edit-input',
+          className: 'form-control form-control-sm user-edit-input',
           name: 'phone',
           type: 'tel',
           value: editValues.phone,
@@ -199,14 +199,14 @@ function UserList() {
         })),
         h('td', null, h('div', { className: 'user-row-actions' },
           h('button', {
-            className: 'user-action-button is-save',
+            className: 'btn btn-sm btn-success user-action-button is-save',
             type: 'button',
             onClick: () => saveEdit(user.id),
             disabled: isBusy,
             'aria-busy': isSaving,
           }, isSaving ? 'Saving…' : 'Save'),
           h('button', {
-            className: 'user-action-button',
+            className: 'btn btn-sm btn-outline-secondary user-action-button',
             type: 'button',
             onClick: cancelEditing,
             disabled: isBusy,
@@ -221,13 +221,13 @@ function UserList() {
       h('td', null, user.phone || '—'),
       h('td', null, h('div', { className: 'user-row-actions' },
         h('button', {
-          className: 'user-action-button',
+          className: 'btn btn-sm btn-outline-secondary user-action-button',
           type: 'button',
           onClick: () => startEditing(user),
           disabled: Boolean(savingId || deletingId),
         }, 'Edit'),
         h('button', {
-          className: 'user-action-button is-danger',
+          className: 'btn btn-sm btn-outline-danger user-action-button is-danger',
           type: 'button',
           onClick: () => deleteUser(user),
           disabled: Boolean(savingId || deletingId),
@@ -237,14 +237,14 @@ function UserList() {
     )
   }
 
-  return h('section', { className: 'page-wrap user-list-page' },
+  return h('section', { className: 'page-wrap container-xl user-list-page' },
     h('div', { className: 'page-heading' },
       h('span', { className: 'eyebrow' }, 'Smart Library members'),
       h('h1', null, 'Registered readers.'),
       h('p', null, 'Browse the people who have joined the library. Search by name or sort the list by name and email.'),
     ),
-    h('section', { className: 'user-list-card', 'aria-labelledby': 'member-directory-title' },
-      h('div', { className: 'user-list-toolbar' },
+    h('section', { className: 'user-list-card card shadow-sm', 'aria-labelledby': 'member-directory-title' },
+      h('div', { className: 'user-list-toolbar card-header bg-transparent' },
         h('div', null,
           h('h2', { id: 'member-directory-title' }, 'Member directory'),
           h('p', null, `${users.length} ${users.length === 1 ? 'member' : 'members'}`),
@@ -254,6 +254,7 @@ function UserList() {
           h('input', {
             id: 'member-search',
             type: 'search',
+            className: 'form-control user-search-input',
             value: search,
             onChange: (event) => setSearch(event.target.value),
             placeholder: 'Type a member name',
@@ -276,8 +277,8 @@ function UserList() {
           users.length === 0 ? 'No registrations have been submitted yet.' : 'No members match that name.')
         : null,
       !isLoading && !error && visibleUsers.length > 0
-        ? h('div', { className: 'user-table-wrap' },
-          h('table', { className: 'user-table' },
+        ? h('div', { className: 'table-responsive user-table-wrap' },
+          h('table', { className: 'table table-hover align-middle mb-0 user-table' },
             h('thead', null,
               h('tr', null,
                 sortHeading('name', 'Name'),

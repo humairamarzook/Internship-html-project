@@ -48,6 +48,8 @@ main { flex: 1; }
 .form-aside .aside-number { display: block; margin-top: 70px; color: #b8cfb8; font: 500 42px 'Playfair Display', serif; }
 .registration-form { padding: 36px; }
 .form-field { display: grid; gap: 8px; margin-bottom: 20px; color: #304d3c; font-size: 13px; font-weight: 600; }
+.form-field .form-label { margin-bottom: 0; color: #304d3c; font-size: 13px; font-weight: 700; }
+.form-text { color: #7d8980; font-size: 12px; font-weight: 400; }
 .form-field input { width: 100%; padding: 13px 14px; border: 1px solid #dfe4da; border-radius: 9px; outline: none; background: #fcfcf8; color: #18382e; }
 .form-field input:focus { border-color: #66876a; box-shadow: 0 0 0 3px rgba(102,135,106,.13); }
 .form-submit { width: 100%; margin-top: 2px; }
@@ -55,6 +57,7 @@ main { flex: 1; }
 .button-spinner { display: inline-block; width: 14px; height: 14px; margin-right: 9px; vertical-align: -2px; border: 2px solid rgba(255,255,255,.45); border-top-color: #fff; border-radius: 50%; animation: button-spin .7s linear infinite; }
 @keyframes button-spin { to { transform: rotate(360deg); } }
 .form-note { min-height: 22px; margin: 15px 0 0; color: #52765a; font-size: 13px; }
+.form-note.alert { min-height: 0; padding: 12px 14px; border-radius: 10px; }
 .form-note.is-error { color: #a13d32; }
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 .about-card { padding: 28px; border: 1px solid #e0e3d9; border-radius: 16px; background: #fffef9; }
@@ -64,14 +67,14 @@ main { flex: 1; }
 .about-card.featured p { color: #d3dfd1; }
 .user-list-page { width: min(1000px, calc(100% - 48px)); }
 .user-list-card { overflow: hidden; border: 1px solid #e1e4da; border-radius: 18px; background: #fffef9; box-shadow: 0 15px 45px rgba(34,61,43,.06); }
-.user-list-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 25px 28px; border-bottom: 1px solid #e8eae3; }
+.user-list-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 25px 28px; border-bottom: 1px solid #e8eae3; border-radius: 18px 18px 0 0; }
 .user-list-toolbar h2 { margin: 0 0 5px; font: 500 25px 'Playfair Display', Georgia, serif; }
 .user-list-toolbar p { margin: 0; color: #7d8980; font-size: 13px; }
 .user-search { display: grid; gap: 7px; width: min(320px, 100%); color: #304d3c; font-size: 12px; font-weight: 600; }
 .user-search input { width: 100%; padding: 11px 13px; border: 1px solid #dfe4da; border-radius: 9px; outline: none; background: #fcfcf8; color: #18382e; }
 .user-search input:focus { border-color: #66876a; box-shadow: 0 0 0 3px rgba(102,135,106,.13); }
 .user-table-wrap { width: 100%; overflow-x: auto; }
-.user-table { width: 100%; border-collapse: collapse; text-align: left; }
+.user-table { width: 100%; border-collapse: collapse; text-align: left; --bs-table-bg: #fffef9; --bs-table-hover-bg: #f7f8f1; }
 .user-table th, .user-table td { padding: 15px 28px; border-bottom: 1px solid #edf0e9; font-size: 14px; }
 .user-table th { color: #607265; background: #fafaf5; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .user-table td { color: #304d3c; }
@@ -97,10 +100,10 @@ main { flex: 1; }
 .user-list-message.is-error { color: #a13d32; }
 .user-list-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #d7e0d3; border-top-color: #315e49; border-radius: 50%; animation: button-spin .7s linear infinite; }
 @media (max-width: 760px) {
-  .site-header { width: min(100% - 32px, 1120px); height: 74px; }
-  .site-nav { gap: 14px; }
-  .site-nav .nav-link { display: none; }
-  .nav-cta { padding: 11px 15px; font-size: 13px; }
+  .site-header { width: min(100% - 32px, 1120px); height: auto; min-height: 74px; padding: 10px 0; flex-wrap: wrap; row-gap: 8px; }
+  .site-nav { width: 100%; justify-content: space-between; gap: 8px; }
+  .site-nav .nav-link { display: inline-flex; padding: 7px 3px; font-size: 12px; }
+  .nav-cta { padding: 9px 12px; font-size: 12px; }
   .home-page { width: min(100% - 32px, 560px); padding: 45px 0 54px; grid-template-columns: 1fr; gap: 42px; }
   .hero-copy h1 { font-size: clamp(46px, 12vw, 66px); }
   .hero-art { min-height: 350px; }
