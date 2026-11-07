@@ -64,11 +64,22 @@
 - Kept the delete confirmation prompt and registration success message in place.
 - Checked live name validation and phone filtering in the browser; confirmed successful registration and tested each sort order with temporary records, then removed the test records.
 
-## Day 6 Source Code
+### Day 6 – React App and Firebase Setup
 
-[Open the Day 6 source files on GitHub](https://github.com/humairamarzook/Internship-html-project/tree/5a50205/smart-library-app/src)
+#### Tasks Completed
 
-## Day 7 Source Code
+- Created the Smart Library React app using Vite and installed the Firebase SDK.
+- Built the Home, Registration, and About screens and added navigation between them.
+- Set up the Firebase project and registered the Smart Library web app.
+- Initialized Firebase in `src/firebase.js` and verified the connection by logging the Firebase app object in the browser console.
 
-[Open the Day 7 source files on GitHub](https://github.com/humairamarzook/Internship-html-project/tree/main/smart-library-app/src)
+### Day 7 – Firestore Registration and Form Validation
+
+#### Tasks Completed
+
+- Created the Cloud Firestore database and the `users` collection.
+- Connected the registration form to Firestore to save each member's name, email, phone number, and server timestamp.
+- Added form validation for names of at least 3 characters, valid email addresses, and phone numbers containing exactly 10 digits.
+- Added a loading spinner while saving and a success message after a registration is saved; the form clears after success.
+- Submitted multiple sample registrations and confirmed they appeared as separate documents in the `users` collection, then cleared the sample records.
 
