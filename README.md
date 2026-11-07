@@ -74,9 +74,17 @@
 - Installed the Firebase JavaScript SDK and created a Firebase project with a registered web app.
 - Added `src/firebase.js` to initialize Firebase using the web app configuration stored in the local `.env.local` file.
 - Tested the initialization by confirming that `console.log(app)` displayed a `FirebaseAppImpl` object in the browser console.
+- Added name (minimum 3 characters), valid email, and 10-digit numeric phone validation to the React registration form.
+- Added a Firestore write to the `users` collection with the registration name, email, phone, and a server timestamp; added saving feedback and a success message.
 - Ran `npm run build` successfully.
 
-#### Note
+#### Verification
 
-- The registration form currently displays a client-side confirmation; it does not save registrations to Firebase. Persisting registrations would require a separate Firestore setup and implementation.
+- Created the Cloud Firestore database in the Firebase Console.
+- Submitted three sample registrations and confirmed that three documents appeared in `users` with their registration fields and timestamps.
+- Deleted the sample registration documents after verifying them.
+
+#### Security Note
+
+- Test-mode Firestore rules are for development only. Restrict database access before using real registration details or deploying the app.
 
