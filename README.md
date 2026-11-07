@@ -66,15 +66,9 @@
 
 ## Day 6 Source Code
 
-- [React app navigation](smart-library-app/src/App.jsx)
-- [Home screen](smart-library-app/src/home.js)
-- [Registration screen](smart-library-app/src/registration.js)
-- [About screen](smart-library-app/src/about.js)
-- [Firebase initialization](smart-library-app/src/firebase.js)
+[Open the Day 6 source files on GitHub](https://github.com/humairamarzook/Internship-html-project/tree/5a50205/smart-library-app/src)
 
 ## Day 7 Source Code
 
-- [Registration validation and Firestore save](smart-library-app/src/registration.js)
-- [Firestore database initialization](smart-library-app/src/firebase.js)
-- [Saving spinner and status styling](smart-library-app/src/App.css)
+[Open the Day 7 source files on GitHub](https://github.com/humairamarzook/Internship-html-project/tree/main/smart-library-app/src)
 
