@@ -10,6 +10,8 @@ button { cursor: pointer; }
 .brand { display: inline-flex; gap: 11px; align-items: center; color: #18382e; text-decoration: none; font-weight: 700; letter-spacing: -.03em; }
 .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; color: #f5f4ed; background: #315e49; border-radius: 50% 50% 50% 10px; font-family: 'Playfair Display', serif; font-size: 20px; }
 .site-nav { display: flex; align-items: center; gap: 30px; }
+.auth-nav-button { white-space: nowrap; }
+.auth-feedback { width: min(1120px, calc(100% - 48px)); margin: 12px auto 0; color: #8a4337; font-size: 13px; }
 .nav-link { padding: 8px 0; border: 0; background: transparent; color: #708077; font-size: 14px; }
 .nav-link:hover, .nav-link.active { color: #1c503b; }
 .nav-cta, .button-primary { border: 0; border-radius: 999px; color: #fffdf8; background: #24543d; padding: 13px 21px; font-weight: 600; transition: background .2s, transform .2s; }
@@ -101,9 +103,10 @@ main { flex: 1; }
 .user-list-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #d7e0d3; border-top-color: #315e49; border-radius: 50%; animation: button-spin .7s linear infinite; }
 @media (max-width: 760px) {
   .site-header { width: min(100% - 32px, 1120px); height: auto; min-height: 74px; padding: 10px 0; flex-wrap: wrap; row-gap: 8px; }
-  .site-nav { width: 100%; justify-content: space-between; gap: 8px; }
+  .site-nav { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
   .site-nav .nav-link { display: inline-flex; padding: 7px 3px; font-size: 12px; }
   .nav-cta { padding: 9px 12px; font-size: 12px; }
+  .auth-nav-button { font-size: 11px !important; }
   .home-page { width: min(100% - 32px, 560px); padding: 45px 0 54px; grid-template-columns: 1fr; gap: 42px; }
   .hero-copy h1 { font-size: clamp(46px, 12vw, 66px); }
   .hero-art { min-height: 350px; }
@@ -114,6 +117,7 @@ main { flex: 1; }
   .registration-form { padding: 26px; }
   .about-grid { grid-template-columns: 1fr; }
   .site-footer { width: min(100% - 32px, 1120px); }
+  .auth-feedback { width: min(100% - 32px, 1120px); }
   .user-list-page { width: min(100% - 32px, 600px); }
   .user-list-toolbar { align-items: stretch; flex-direction: column; padding: 22px; }
   .user-search { width: 100%; }

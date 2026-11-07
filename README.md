@@ -118,4 +118,5 @@
 - Tested member name search and ascending/descending sorting by name and email.
 - Edited a synthetic member through the app, verified the Firestore update, removed only that test member, and confirmed the live member list refreshed.
 - Added Firebase Hosting configuration for the Vite build output and single-page app routes, plus an `npm run deploy` command and setup instructions.
-- Verified the production build and lint checks. Firebase Hosting is prepared, but no live deployment URL has been created because the Firebase CLI and a Firebase CLI sign-in are not available in this workspace. Firestore test-mode rules also need to be secured before publishing real member data.
+- Added Google sign-in for the Members area and production Firestore rules that allow validated registrations while limiting member reads, edits, and deletes to the configured administrator.
+- Verified the production build and lint checks. Hosting is not live yet; the Google sign-in provider must be enabled in Firebase and the Firebase CLI must be signed in before deployment.

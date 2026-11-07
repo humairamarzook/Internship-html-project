@@ -28,7 +28,9 @@ function UserList() {
       setIsLoading(false)
     }, (snapshotError) => {
       console.error('Could not fetch registered users from Firestore.', snapshotError)
-      setError('Could not load members. Check your Firestore read rules and internet connection.')
+      setError(snapshotError.code === 'permission-denied'
+        ? 'Member records are private. Sign in with the configured administrator Google account.'
+        : 'Could not load members. Check your Firestore read rules and internet connection.')
       setIsLoading(false)
     })
 
