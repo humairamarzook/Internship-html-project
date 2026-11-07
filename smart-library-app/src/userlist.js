@@ -1,5 +1,5 @@
 import { createElement as h, useEffect, useMemo, useState } from 'react'
-import { collection, onSnapshot } from 'firebase/firestore'
+import { collection, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import { db } from './firebase.js'
 
 function UserList() {
@@ -7,15 +7,17 @@ function UserList() {
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState('name')
   const [sortDirection, setSortDirection] = useState('asc')
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(Boolean(db))
+  const [error, setError] = useState(db ? '' : 'Firebase is not configured. Add the Firebase values to .env.local and restart the app.')
+  const [editingId, setEditingId] = useState(null)
+  const [editValues, setEditValues] = useState({ name: '', email: '', phone: '' })
+  const [savingId, setSavingId] = useState(null)
+  const [deletingId, setDeletingId] = useState(null)
+  const [actionMessage, setActionMessage] = useState('')
+  const [actionMessageType, setActionMessageType] = useState('success')
 
   useEffect(() => {
-    if (!db) {
-      setError('Firebase is not configured. Add the Firebase values to .env.local and restart the app.')
-      setIsLoading(false)
-      return undefined
-    }
+    if (!db) return undefined
 
     const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
       setUsers(snapshot.docs.map((userDocument) => ({
@@ -69,6 +71,172 @@ function UserList() {
     )
   }
 
+  function startEditing(user) {
+    setEditingId(user.id)
+    setEditValues({
+      name: String(user.name ?? ''),
+      email: String(user.email ?? ''),
+      phone: String(user.phone ?? ''),
+    })
+    setActionMessage('')
+  }
+
+  function changeEditValue(event) {
+    const { name, value } = event.currentTarget
+    setEditValues((currentValues) => ({ ...currentValues, [name]: value }))
+  }
+
+  function cancelEditing() {
+    setEditingId(null)
+    setEditValues({ name: '', email: '', phone: '' })
+  }
+
+  async function saveEdit(userId) {
+    const name = editValues.name.trim()
+    const email = editValues.email.trim()
+    const phone = editValues.phone.trim()
+
+    if (name.length < 3) {
+      setActionMessageType('error')
+      setActionMessage('Name must be at least 3 characters long.')
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setActionMessageType('error')
+      setActionMessage('Enter a valid email address.')
+      return
+    }
+    if (!/^\d{10}$/.test(phone)) {
+      setActionMessageType('error')
+      setActionMessage('Phone number must contain exactly 10 digits.')
+      return
+    }
+    if (!db) {
+      setActionMessageType('error')
+      setActionMessage('Firebase is not configured. The member could not be updated.')
+      return
+    }
+
+    setSavingId(userId)
+    setActionMessage('')
+    try {
+      await updateDoc(doc(db, 'users', userId), { name, email, phone })
+      setActionMessageType('success')
+      setActionMessage('Member updated successfully.')
+      cancelEditing()
+    } catch (updateError) {
+      console.error('Could not update the Firestore member.', updateError)
+      setActionMessageType('error')
+      setActionMessage('Could not update this member. Check Firestore rules and try again.')
+    } finally {
+      setSavingId(null)
+    }
+  }
+
+  async function deleteUser(user) {
+    const memberName = String(user.name ?? 'this member')
+    const confirmed = window.confirm(`Delete ${memberName} from the member list? This cannot be undone.`)
+    if (!confirmed) return
+    if (!db) {
+      setActionMessageType('error')
+      setActionMessage('Firebase is not configured. The member could not be deleted.')
+      return
+    }
+
+    setDeletingId(user.id)
+    setActionMessage('')
+    try {
+      await deleteDoc(doc(db, 'users', user.id))
+      setActionMessageType('success')
+      setActionMessage(`${memberName} was deleted successfully.`)
+      if (editingId === user.id) cancelEditing()
+    } catch (deleteError) {
+      console.error('Could not delete the Firestore member.', deleteError)
+      setActionMessageType('error')
+      setActionMessage('Could not delete this member. Check Firestore rules and try again.')
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
+  function renderUserRow(user) {
+    const isEditing = editingId === user.id
+    const isSaving = savingId === user.id
+    const isDeleting = deletingId === user.id
+    const isBusy = isSaving || isDeleting
+
+    if (isEditing) {
+      return h('tr', { key: user.id, className: 'user-editing-row' },
+        h('td', null, h('input', {
+          className: 'user-edit-input',
+          name: 'name',
+          value: editValues.name,
+          onChange: changeEditValue,
+          'aria-label': 'Edit member name',
+          minLength: 3,
+          required: true,
+        })),
+        h('td', null, h('input', {
+          className: 'user-edit-input',
+          name: 'email',
+          type: 'email',
+          value: editValues.email,
+          onChange: changeEditValue,
+          'aria-label': 'Edit member email',
+          required: true,
+        })),
+        h('td', null, h('input', {
+          className: 'user-edit-input',
+          name: 'phone',
+          type: 'tel',
+          value: editValues.phone,
+          onChange: changeEditValue,
+          'aria-label': 'Edit member phone',
+          inputMode: 'numeric',
+          pattern: '[0-9]{10}',
+          maxLength: 10,
+          required: true,
+        })),
+        h('td', null, h('div', { className: 'user-row-actions' },
+          h('button', {
+            className: 'user-action-button is-save',
+            type: 'button',
+            onClick: () => saveEdit(user.id),
+            disabled: isBusy,
+            'aria-busy': isSaving,
+          }, isSaving ? 'Saving…' : 'Save'),
+          h('button', {
+            className: 'user-action-button',
+            type: 'button',
+            onClick: cancelEditing,
+            disabled: isBusy,
+          }, 'Cancel'),
+        )),
+      )
+    }
+
+    return h('tr', { key: user.id },
+      h('td', null, user.name || '—'),
+      h('td', null, user.email || '—'),
+      h('td', null, user.phone || '—'),
+      h('td', null, h('div', { className: 'user-row-actions' },
+        h('button', {
+          className: 'user-action-button',
+          type: 'button',
+          onClick: () => startEditing(user),
+          disabled: Boolean(savingId || deletingId),
+        }, 'Edit'),
+        h('button', {
+          className: 'user-action-button is-danger',
+          type: 'button',
+          onClick: () => deleteUser(user),
+          disabled: Boolean(savingId || deletingId),
+          'aria-busy': isDeleting,
+        }, isDeleting ? 'Deleting…' : 'Delete'),
+      )),
+    )
+  }
+
   return h('section', { className: 'page-wrap user-list-page' },
     h('div', { className: 'page-heading' },
       h('span', { className: 'eyebrow' }, 'Smart Library members'),
@@ -98,6 +266,11 @@ function UserList() {
           h('span', { className: 'user-list-spinner', 'aria-hidden': true }), 'Loading registered members…')
         : null,
       error ? h('p', { className: 'user-list-message is-error', role: 'alert' }, error) : null,
+      actionMessage ? h('p', {
+        className: `user-list-message user-action-message${actionMessageType === 'error' ? ' is-error' : ''}`,
+        role: actionMessageType === 'error' ? 'alert' : 'status',
+        'aria-live': 'polite',
+      }, actionMessage) : null,
       !isLoading && !error && visibleUsers.length === 0
         ? h('p', { className: 'user-list-message', role: 'status' },
           users.length === 0 ? 'No registrations have been submitted yet.' : 'No members match that name.')
@@ -110,13 +283,10 @@ function UserList() {
                 sortHeading('name', 'Name'),
                 sortHeading('email', 'Email'),
                 h('th', { scope: 'col' }, 'Phone'),
+                h('th', { scope: 'col' }, 'Actions'),
               ),
             ),
-            h('tbody', null, visibleUsers.map((user) => h('tr', { key: user.id },
-              h('td', null, user.name || '—'),
-              h('td', null, user.email || '—'),
-              h('td', null, user.phone || '—'),
-            ))),
+            h('tbody', null, visibleUsers.map(renderUserRow)),
           ),
         )
         : null,

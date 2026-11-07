@@ -94,3 +94,15 @@
 - Added loading, empty-list, and Firestore error messages, and linked the member list from the app navigation and home screen.
 - Built the React app successfully with Vite.
 
+### Day 9 – Firestore User Editing and Deletion
+
+#### Tasks Completed
+
+- Added Edit and Delete actions to every member row in the user list.
+- Added an inline edit form for each member's name, email, and phone, with the same validation used during registration.
+- Added a confirmation prompt before deleting a member from Firestore.
+- Connected edits and deletions to Firestore and used the live collection listener to refresh the list automatically.
+- Added success and error messages for member updates and deletions.
+- Tested Firestore create, update, and delete operations with a temporary record, checked listener updates, verified the record was removed, and checked the missing-record error path.
+- Ran the production build and lint checks successfully.
+
