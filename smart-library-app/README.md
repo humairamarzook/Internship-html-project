@@ -34,4 +34,4 @@ Before publishing, enable Google as a sign-in provider in **Firebase Console →
 2. Create the Firebase Hosting site if the project does not have one yet: `npx --yes firebase-tools@15.3.0 hosting:sites:create smart-library-app-e6941`.
 3. From this folder, run `npm run deploy`. This builds the React app, generates the private admin rules from the email in `.env.local`, and deploys both Hosting and Firestore rules. The first run downloads the Firebase CLI if needed.
 
-The Firebase-provided site URL will be `https://smart-library-app-e6941.web.app` after the first successful deployment. The deployed app uses the Firestore database connected to this Firebase project.
+Live site: [https://smart-library-app-e6941.web.app](https://smart-library-app-e6941.web.app). The deployed app uses the Firestore database connected to this Firebase project.

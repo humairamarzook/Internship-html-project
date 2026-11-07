@@ -3,6 +3,7 @@
     "rules": "firestore.rules"
   },
   "hosting": {
+    "site": "smart-library-app-e6941",
     "public": "dist",
     "ignore": [
       "firebase.json",
