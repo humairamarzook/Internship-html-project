@@ -120,3 +120,4 @@
 - Added Firebase Hosting configuration for the Vite build output and single-page app routes, plus an `npm run deploy` command and setup instructions.
 - Added Google sign-in for the Members area and production Firestore rules that allow validated registrations while limiting member reads, edits, and deletes to the configured administrator.
 - Verified the production build and lint checks, deployed the site and administrator-restricted Firestore rules, and confirmed the live URL responds with HTTP 200: https://smart-library-app-e6941.web.app
+- Enabled the Google sign-in provider in Firebase Authentication, then verified the administrator can sign in to the live site and open the Members area.
